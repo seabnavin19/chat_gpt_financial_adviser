@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+
+  fastapi:
+    build: .
+    container_name: gptchatbot
+    restart: always
+    environment:
+        - DB_USER = "root"
+        - DB_PASS = "123Kirirom"
+        - DB_HOST = "34.143.206.144"
+        - DB_NAME = "ProviserDatabase"	
+        - TZ=Asia/Phnom_Penh
+      
+    volumes:
+      - ./:/opt/app
+    working_dir: /opt/app
+    
+    ports:
+      - "8000:8000"
+    entrypoint: ["python", "app.py"]
+   
+    profiles: ["gpt"]
+
+
+
+
+
+
+
+
+
+
+
+
+volumes:
+  fastapi_vol:
+networks:
+  default:
+          name: gpt-network
