@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from utils.chat import ChatBot
 from utils.excute_query import DatabaseInterpreter, DataframeTranslate
 import uvicorn
+import json
 
 app = FastAPI()
 
@@ -22,13 +23,13 @@ def chat(question: str):
     interpreter = DatabaseInterpreter()
     sql_question = chatbot.get_messages(question)
 
+
     answer=interpreter.InterpretRespone(sql_question)
 
     description = DataframeTranslate().get_description(question=question,data=answer)
 
-
-
-    return description
+    #return a proper response with success code
+    return json.dumps({ "answer": description}), 200, {"Content-Type": "application/json"}
 
 
 
