@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Sign-In</title>
+  <!-- <script src="firebase-app.js"></script> -->
+
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCHiK-HzMJ9aF1qB2iRKBf9itVeUGOaJM",
+      authDomain: "proadviser-3cf6a.firebaseapp.com",
+      databaseURL: "https://proadviser-3cf6a-default-rtdb.firebaseio.com",
+      projectId: "proadviser-3cf6a",
+      storageBucket: "proadviser-3cf6a.appspot.com",
+      messagingSenderId: "775123618774",
+      appId: "1:775123618774:web:6dca9b3c9ee33c7e267277"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    function onGoogleSignIn(response) {
+      const googleToken = response.credential;
+      // Use the googleToken in your signup function or make a request to your backend API
+      console.log(googleToken);
+
+      // Call your signup function or API request here
+      signup(googleToken);
+    }
+
+    function startSignup() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          const googleToken = result.credential.idToken;
+          // Use the googleToken in your signup function or make a request to your backend API
+          console.log(googleToken);
+
+          // Call your signup function or API request here
+          signup(googleToken);
+        })
+        .catch((error) => {
+          console.error(error.message); // Error message
+        });
+    }
+
+    function signup(googleToken) {
+      const apiUrl = 'http://localhost:8000/signup'; // Replace with your backend API URL
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ google_token: googleToken }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.message); // Success message
+        })
+        .catch(error => {
+          console.error(error.message); // Error message
+        });
+    }
+  </script>
+</head>
+<body>
+  <div id="g_id_onload"
+       data-client_id="775123618774-j9bqg16vo6nahhsnc2k4att82a78fvvk.apps.googleusercontent.com"
+       data-callback="onGoogleSignIn">
+  </div>
+  <div id="g_id_signin"></div>
+  <button onclick="startSignup()">Signup with Google</button>
+</body>
+</html>
+
