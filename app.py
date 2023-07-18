@@ -3,8 +3,23 @@ from utils.chat import ChatBot
 from utils.excute_query import DatabaseInterpreter, DataframeTranslate
 import uvicorn
 import json
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# CORS configuration
+origins = [
+    "http://localhost",
+    "http://localhost:3000",  # Add your React frontend URL here
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -29,7 +44,12 @@ def chat(question: str):
     description = DataframeTranslate().get_description(question=question,data=answer)
 
     #return a proper response with success code
-    return json.dumps({ "answer": description}), 200, {"Content-Type": "application/json"}
+    print(description)
+    return {
+        "success": True,
+        "question": question,
+        "answer": description
+    }
 
 
 
