@@ -32,13 +32,13 @@ class DataframeTranslate:
 
     def get_description(self,question,data):
         if type(data) == pd.core.frame.DataFrame:
-    
-        
+
+            data = data.replace('>','greater than')
             question =  f'''
-                - Question : {question} + " please answer like you are a financial a"
+                - Question : {question} + " please answer like you are a financial advisor"
                 
                 - Dataframe:
-                {data}
+                            {data}
                 '''
             
             response = self.chatbot.get_messages(question=question)
