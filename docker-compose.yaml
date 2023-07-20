@@ -8,7 +8,7 @@ services:
     environment:
         - DB_USER = "root"
         - DB_PASS = "123Kirirom"
-        - DB_HOST = "35.240.154.65"
+        - DB_HOST = "34.143.180.195"
         - DB_NAME = "ProviserDatabase"	
         - TZ=Asia/Phnom_Penh
       
