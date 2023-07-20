@@ -61,7 +61,8 @@ class ChatBot:
 
                                 you are a system that help me analysis the data 
                                 i give you data frame you help me answer the question, 
-                                if dataframe empty you just say you don't know you don't hae info right now , not need to tell user a bout dataframe
+                                if dataframe empty you just say you don't know you don't hae info right now 
+                                ** please answer in less than 30 words
                                 '''
                                 },
                                 {
